@@ -1,0 +1,8 @@
+[package]
+name = "noise_gen"
+version = "0.1.0"
+authors = ["Bartłomiej T. Listwon"]
+
+[dependencies]
+image = "*"
+rand = "*"
