@@ -6,3 +6,4 @@ authors = ["Bartłomiej T. Listwon"]
 [dependencies]
 image = "*"
 rand = "*"
+time= "*"
