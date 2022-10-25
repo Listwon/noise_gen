@@ -1,9 +1,9 @@
 extern crate image;
 extern crate rand;
 extern crate time;
-use time::PreciseTime;
+use time::Instant;
 
-use rand::{thread_rng, Rng};
+use rand::{thread_rng, seq::SliceRandom};
 use std::f64;
 use std::env;
 
@@ -95,11 +95,12 @@ fn main() {
         }
     }
 
-    let start = PreciseTime::now();
+    let start = Instant::now();
     let mut imgbuf = image::GrayImage::new(size, size);
 
     let mut perm: Vec<usize> = (0..256).collect();
-    thread_rng().shuffle(&mut perm);
+    let mut rng = thread_rng();
+    perm.shuffle(&mut rng);
 
     let perm_clone = perm.clone();
     perm.extend(perm_clone);
@@ -121,7 +122,6 @@ fn main() {
         *pixel = image::Luma([(noise_gen.f_bm(x, y) * 255.0) as u8]);
     }
 
-    let end = PreciseTime::now();
-    println!("{}", start.to(end));
+    println!("{}", start.elapsed());
     imgbuf.save(format!("noise{0}x{0}.png", size)).unwrap();
 }
